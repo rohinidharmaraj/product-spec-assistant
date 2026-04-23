@@ -12,11 +12,11 @@ A full-stack web app that helps product teams write and refine feature specifica
 ![Refine](images/ref%20and%20version.png)
  
 ## Tech Stack
--Angular(Frontend)
--ASP.NET Core Web API
--SQL Server
--Bcrypt.Net(Password Hashing)
--jsPDF/html2canvas(PDF Export)
+- Angular 19
+- ASP.NET Core Web API
+- SQL Server
+- Bcrypt.Net(Password Hashing)
+- jsPDF/html2canvas(PDF Export)
  
 ## Features
  
