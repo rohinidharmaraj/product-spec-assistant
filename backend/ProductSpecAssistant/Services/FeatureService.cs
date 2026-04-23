@@ -51,8 +51,6 @@ namespace ProductSpecAssistant.Services
 
             return version;
         }
-
-        // ✅ REFINE FEATURE
         public async Task<FeatureVersion> RefineFeatureAsync(int featureId, string instruction, int userId)
         {
             var feature = _context.Features
@@ -91,8 +89,6 @@ namespace ProductSpecAssistant.Services
 
             return newVersion;
         }
-
-        // ✅ GET FEATURE BY ID
         public Feature GetFeatureById(int featureId, int userId)
         {
             var feature = _context.Features
@@ -110,8 +106,6 @@ namespace ProductSpecAssistant.Services
 
             return feature;
         }
-
-        // ✅ GET FEATURES BY PRODUCT
         public List<Feature> GetFeaturesByProduct(int productId, int userId)
         {
             var product = _context.Products
@@ -125,8 +119,6 @@ namespace ProductSpecAssistant.Services
                 .Where(f => f.ProductId == productId)
                 .ToList();
         }
-
-        // ✅ DELETE FEATURE
         public void DeleteFeature(int featureId, int userId)
         {
             var feature = _context.Features
