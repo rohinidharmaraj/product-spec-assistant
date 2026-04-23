@@ -31,16 +31,22 @@ A full-stack web app that helps product teams write and refine feature specifica
 ## Getting Started
  
 ### Backend
+```
 cd backend/ProductSpecAssistant 
 dotnet ef database update 
 dotnet run
+```
  
 ### Frontend
+```
 cd frontend 
 npm install 
 ng serve
+```
  
 Frontend runs at http://localhost:4200
+
+
 Backend runs at https://localhost:7016
  
 ## Environment Setup
