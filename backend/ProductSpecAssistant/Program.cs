@@ -5,13 +5,10 @@ using ProductSpecAssistant.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSession();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<AuthFilter>();
 builder.Services.AddScoped<ProductService>();
@@ -27,15 +24,12 @@ builder.Services.AddCors(options =>
 });
 var app = builder.Build();
 app.UseCors("AllowAngular");
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 app.UseHttpsRedirection();
-app.UseSession();
-
 app.UseAuthorization();
 
 app.MapControllers();
