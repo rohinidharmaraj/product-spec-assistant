@@ -15,26 +15,26 @@ namespace ProductSpecAssistant.Services
         public async Task<string> GenerateSpecAsync(string title, string rawIdea,string productName,string productDescription)
         {
             string prompt = $@"
-You are a Senior Product Manager.Be concise and specific
-Product:{productName}
-Product Description:{productDescription}
-Feature Title:{title}
-Raw Idea:{rawIdea}
-Write a short focused spec for this feature.
-Each section should be 2-3 lines max.
-The spec must relate to the product described above
-You MUST include ALL of these sections in the exact  order:
-1.Feature Title
-2.Problem Statement
-3.Background
-4.Target Users
-5.User Stories(As a [user],I want [goal] so that [benefit])(max 3)
-6.Acceptance Criteria(max  4 points)
-7.Edge Cases(max 3 points)
-8.Success Metrics
-BE BRIEF.NO LONG PARAGRPAHS
-Write in plain text only.Do not use JSON.Do not skip any section.
-";
+            You are a Senior Product Manager.Be concise and specific
+            Product:{productName}
+            Product Description:{productDescription}
+            Feature Title:{title}
+            Raw Idea:{rawIdea}
+            Write a short focused spec for this feature.
+            Each section should be 2-3 lines max.
+            The spec must relate to the product described above
+            You MUST include ALL of these sections in the exact  order:
+            1.Feature Title
+            2.Problem Statement
+            3.Background
+            4.Target Users
+            5.User Stories(As a [user],I want [goal] so that [benefit])(max 3)
+            6.Acceptance Criteria(max  4 points)
+            7.Edge Cases(max 3 points)
+            8.Success Metrics
+            BE BRIEF.NO LONG PARAGRPAHS
+            Write in plain text only.Do not use JSON.Do not skip any section.
+            ";
             string result= await CallHuggingFaceAsync(prompt);
             return result;
         }
@@ -43,29 +43,29 @@ Write in plain text only.Do not use JSON.Do not skip any section.
         public async Task<string> RefineSpecAsync(string previousContent,string instruction,string productName,string productDescription)
         {
             string prompt = $@"
-You are updating a product specification.
- 
-CURRENT SPEC:
-{previousContent}
- 
-CHANGE TO MAKE:
-{instruction}
- 
-Return the complete updated specification with ALL of these 8 sections in order.
-Do not skip any section. Do not add any labels or headers outside the sections.
-Start your response directly with '1.Feature Title:' and end with '8.Success Metrics'.
- 
-1.Feature Title
-2.Problem Statement
-3.Background
-4.Target Users
-5.User Stories (max 3, format: As a [user], I want [goal] so that [benefit])
-6.Acceptance Criteria (max 4 points)
-7.Edge Cases (max 3 points)
-8.Success Metrics (max 2 points)
- 
-Output ONLY the spec. No intro. No explanation. No labels outside these 8 sections.
-";
+            You are updating a product specification.
+             
+            CURRENT SPEC:
+            {previousContent}
+             
+            CHANGE TO MAKE:
+            {instruction}
+             
+            Return the complete updated specification with ALL of these 8 sections in order.
+            Do not skip any section. Do not add any labels or headers outside the sections.
+            Start your response directly with '1.Feature Title:' and end with '8.Success Metrics'.
+             
+            1.Feature Title
+            2.Problem Statement
+            3.Background
+            4.Target Users
+            5.User Stories (max 3, format: As a [user], I want [goal] so that [benefit])
+            6.Acceptance Criteria (max 4 points)
+            7.Edge Cases (max 3 points)
+            8.Success Metrics (max 2 points)
+             
+            Output ONLY the spec. No intro. No explanation. No labels outside these 8 sections.
+            ";
             string result= await CallHuggingFaceAsync(prompt);
             return result;
 
@@ -75,8 +75,6 @@ Output ONLY the spec. No intro. No explanation. No labels outside these 8 sectio
         {
             var apiKey = _configuration["AI:ApiKey"];
             var apiUrl = _configuration["AI:ApiUrl"];
-            // apiKey = "";
-            //string apiUrl = "https://router.huggingface.co/v1/chat/completions";
             if (string.IsNullOrEmpty(apiUrl))
                 throw new Exception("null apirul");
             if (string.IsNullOrEmpty(apiKey))
@@ -109,7 +107,6 @@ Output ONLY the spec. No intro. No explanation. No labels outside these 8 sectio
             var generatedText = doc.RootElement.GetProperty("choices")[0].GetProperty("message").GetProperty("content").GetString();
 
             return generatedText;
-
         }
     }
 }
