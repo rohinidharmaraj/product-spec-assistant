@@ -16,8 +16,7 @@ namespace ProductSpecAssistant.Services
         }
         public async Task<FeatureVersion> CreateFeatureAsync(string title, string rawIdea, int productId, int userId)
         {
-            var product = _context.Products
-                .FirstOrDefault(p => p.Id == productId && p.UserId == userId);
+            var product = _context.Products.FirstOrDefault(p => p.Id == productId && p.UserId == userId);
 
             if (product == null)
                 throw new Exception("Access denied");
