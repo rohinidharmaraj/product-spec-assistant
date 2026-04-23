@@ -1,0 +1,28 @@
+<div class="app-shell">
+  <aside class="sidebar" *ngIf="!isFeatureRoute">
+    <div class="sidebar-brand">
+      <span class="brand-icon">&#10022;</span>
+      <span class="brand-name">Product Spec Assistant</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a routerLink="/app/dashboard" routerLinkActive="active" class="sidebar-link">
+        Dashboard
+      </a>
+      <div *ngIf="products.length > 0" class="sidebar-section-label">Products</div>
+      <a *ngFor="let product of products" [routerLink]="['/app/products', product.id, 'features']"
+        routerLinkActive="active" class="sidebar-link sidebar-product-link">
+        <span class="product-initial">{{ product.name.charAt(0).toUpperCase() }}</span>
+        {{ product.name }}
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-email">{{ userEmail }}</div>
+      <button class="sidebar-logout-btn" (click)="logout()">Logout</button>
+    </div>
+  </aside>
+  <div class="main-area">
+    <main class="page-content">
+      <router-outlet />
+    </main>
+  </div>
+</div>

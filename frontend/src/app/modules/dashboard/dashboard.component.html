@@ -1,0 +1,68 @@
+<div class="dashboard">
+  <div class="page-header">
+    <div>
+      <h1>My Workspaces</h1>
+      <p class="page-subtitle">Manage your products and their feature specs :-)</p>
+    </div>
+    <button class="btn btn-primary" (click)="openModal()">+ New Product</button>
+  </div>
+  <div *ngIf="!loading" class="product-grid">
+    <div class="product-card create-card" (click)="openModal()">
+      <div class="create-icon">+</div>
+      <div class="create-label">New Product</div>
+      <div class="create-hint">Click to create a workspace</div>
+    </div>
+    <div class="product-card" *ngFor="let product of products" (click)="goToFeatures(product.id)">
+      <div class="card-body">
+        <div class="card-row-delete">
+          
+          <h3 class="product-name">{{ product.name }}</h3>
+          <span class="delete-icon" (click)="deleteProduct(product.id,$event)">🗑️</span>
+        </div>
+        <p class="product-description">{{ product.description }}</p>
+      </div>
+      <div class="card-footer">
+        <span class="open-link">Open Workspace &rarr;</span>
+      </div>
+    </div>
+
+  </div>
+  <div *ngIf="!loading && products.length === 0" class="empty-state">
+    <p>No products yet. Create your first workspace above.</p>
+  </div>
+</div>
+<ng-container *ngIf="showModal">
+  <div class="modal-backdrop" (click)="closeModal()"></div>
+  <div class="modal">
+    <div class="modal-header">
+      <h2>New Product</h2>
+      <button class="modal-close" (click)="closeModal()">&times;</button>
+    </div>
+    <form #createForm="ngForm" (ngSubmit)="onCreateProduct(createForm)" novalidate>
+
+      <div class="form-group">
+        <label for="productName">Product Name</label>
+        <input type="text" id="productName" name="productName" [(ngModel)]="newProductName" required
+          placeholder="e.g., CRM Platform" #nameRef="ngModel" />
+        <span class="field-error" *ngIf="nameRef.invalid && nameRef.touched">
+          Product name is required.
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="productDesc">Description</label>
+        <textarea id="productDesc" name="productDesc" [(ngModel)]="newProductDescription" rows="3"
+          placeholder="What does this product do?">
+      </textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" (click)="closeModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="saving">
+          {{ saving ? 'Creating...' : 'Create Product' }}
+        </button>
+      </div>
+
+    </form>
+  </div>
+</ng-container>

@@ -1,0 +1,91 @@
+<div class="auth-page">
+  <div class="auth-card card">
+    <div class="auth-brand">
+      <span class='brand-icon'>&#10022;</span>
+      <span class="brand-name">Product Spec Assistant</span>
+    </div>
+    <div class="auth-tabs">
+      <button
+        type="button"
+        class="auth-tab"
+        [class.active]="mode === 'login'"
+        (click)="switchMode('login')">
+        Login
+      </button>
+      <button
+        type="button"
+        class="auth-tab"
+        [class.active]="mode === 'register'"
+        (click)="switchMode('register')">
+        Register
+      </button>
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-error">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+    <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" novalidate>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="email"
+          required
+          email
+          placeholder="user@gmail.com"
+          #emailRef="ngModel" />
+        <span class="field-error" *ngIf="emailRef.invalid && emailRef.touched">
+          Enter a valid email address.
+        </span>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="password"
+          required
+          minlength="6"
+          placeholder="Min. 6 characters"
+          #passwordRef="ngModel" />
+        <span class="field-error" *ngIf="passwordRef.invalid && passwordRef.touched">
+          Password must be at least 6 characters.
+        </span>
+      </div>
+      <div class="form-group" *ngIf="mode === 'register'">
+        <label for="confirmPassword">Confirm Password</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          name="confirmPassword"
+          [(ngModel)]="confirmPassword"
+          required
+          placeholder="Re-enter password"
+          #confirmRef="ngModel" />
+        <span class="field-error" *ngIf="confirmRef.invalid && confirmRef.touched">
+          Please confirm your password.
+        </span>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary btn-block"
+        [disabled]="loading">
+        {{ loading ? 'Please wait...' : (mode === 'login' ? 'Login' : 'Create Account') }}
+      </button>
+ 
+    </form>
+    <p class="auth-switch">
+      <ng-container *ngIf="mode === 'login'">
+        Don't have an account?
+        <a href="javascript:void(0)" (click)="switchMode('register')">Register</a>
+      </ng-container>
+      <ng-container *ngIf="mode === 'register'">
+        Already have an account?
+        <a href="javascript:void(0)" (click)="switchMode('login')">Login</a>
+      </ng-container>
+    </p>
+ 
+  </div>
+ 
+</div>

@@ -1,0 +1,170 @@
+:root {
+  --primary:            #1a4a8a;
+  --primary-dark:       #0F2A44;
+  --primary-hover:      #163d73;
+  --primary-light:      #e8f0fb;
+  --danger:             #dc2626;
+  --success:            #16a34a;
+  --bg-page:            #f4f6f9;
+  --bg-card:            #ffffff;
+  --bg-sidebar:         #0F2A44;
+  --bg-sidebar-hover:   #163d73;
+  --bg-sidebar-active:  #1a4a8a;
+  --text-primary:       #0f172a;
+  --text-secondary:     #64748b;
+  --text-muted:         #94a3b8;
+  --text-sidebar:       #b0c4de;
+  --text-on-primary:    #ffffff;
+  --border:             #e2e8f0;
+  --border-input:       #cbd5e1;
+  --border-focus:       #1a4a8a;
+  --radius-sm:          4px;
+  --radius-md:          8px;
+  --radius-lg:          12px;
+ 
+  --shadow-card:        0 1px 4px rgba(0, 0, 0, 0.08);
+ 
+  --sidebar-width:      220px;
+  --topbar-height:      60px;
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html, body {
+  height: 100%;
+}
+body {
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  color: var(--text-primary);
+  background-color: var(--bg-page);
+  line-height: 1.5;
+}
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+h1 { font-size: 22px; font-weight: 700; }
+h2 { font-size: 18px; font-weight: 600; }
+h3 { font-size: 15px; font-weight: 600; }
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 16px;
+}
+label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  outline: none;
+  transition: border-color 0.15s;
+}
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--border-focus);
+}
+input.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+  border-color: var(--danger);
+}
+.field-error {
+  font-size: 12px;
+  color: var(--danger);
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+ 
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+ 
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--text-on-primary);
+}
+ 
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+}
+ 
+.btn-outline {
+  background-color: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+ 
+.btn-outline:hover:not(:disabled) {
+  background-color: var(--primary-light);
+}
+ 
+.btn-block {
+  width: 100%;
+}
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+.alert {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+ 
+.alert-error {
+  background-color: #fef2f2;
+  color: var(--danger);
+  border: 1px solid #fecaca;
+}
+ 
+.alert-success {
+  background-color: #f0fdf4;
+  color: var(--success);
+  border: 1px solid #bbf7d0;
+}
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.divider {
+  height: 1px;
+  background-color: var(--border);
+  margin: 16px 0;
+}

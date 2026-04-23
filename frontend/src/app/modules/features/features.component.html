@@ -1,0 +1,147 @@
+<div class="features-page">
+  <aside class="features-sidebar">
+    <a routerLink="/app/dashboard" class="sidebar-brand">
+      <span class="brand-icon">&#10022;</span>
+      <span class="brand-name">Product Spec Assistant</span>
+    </a>
+    <div class="workspace-info" *ngIf="product">
+      <div class="workspace-initial">{{ product.name.charAt(0).toUpperCase() }}</div>
+      <div>
+        <div class="workspace-label">Current workspace</div>
+        <div class="workspace-name">{{ product.name }}</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="features-list-header">
+      <span class="features-section-label">Features</span>
+      <span class="features-count">{{ features.length }}</span>
+    </div>
+
+    <div class="features-list">
+      <div *ngFor="let feature of features" class="feature-item" [class.active]="selectedFeature?.id === feature.id"
+        (click)="selectFeature(feature)">
+        <div class="feature-item-dot" [class.dot-active]="selectedFeature?.id === feature.id">
+        </div>
+        <div class="feature-item-info">
+          <span class="feature-item-title">{{ feature.title }}</span>
+        </div>
+        <span class="delete-icon" (click)="deleteFeature(feature.id,$event)">🗑️</span>
+      </div>
+
+      <div *ngIf="features.length === 0" class="no-features-text">
+        No features yet.
+      </div>
+    </div>
+    <button class="add-feature-btn" (click)="openNewFeatureForm()">
+      <span class="add-icon">+</span> Add new feature
+    </button>
+    <div class="sidebar-footer">
+      <div class="sidebar-email">{{ userEmail }}</div>
+      <button class="sidebar-logout-btn" (click)="logout()">Logout</button>
+    </div>
+
+  </aside>
+  <main class="features-main">
+
+    <div *ngIf="showForm || selectedFeature" class="spec-card card">
+
+      <h2 class="spec-card-title">New Feature Specification</h2>
+
+      <form #featureForm="ngForm" (ngSubmit)="onGenerateSpec(featureForm)" novalidate>
+
+        <div class="form-group">
+          <label for="featureTitle">Feature Title</label>
+          <input type="text" id="featureTitle" name="featureTitle" [(ngModel)]="featureTitle" required
+            placeholder="e.g., Advanced Search Filters" #titleRef="ngModel" />
+          <span class="field-error" *ngIf="titleRef.invalid && titleRef.touched">
+            Title is required.
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label for="rawIdea">Raw Idea</label>
+          <textarea id="rawIdea" name="rawIdea" [(ngModel)]="rawIdea" required rows="3"
+            placeholder="Describe the feature idea in plain language..." #ideaRef="ngModel">
+          </textarea>
+          <span class="field-error" *ngIf="ideaRef.invalid && ideaRef.touched">
+            Raw idea is required.
+          </span>
+        </div>
+
+        <div *ngIf="generateError" class="alert alert-error">{{ generateError }}</div>
+
+        <div class="form-row-right">
+          <button type="submit" class="btn btn-primary" [disabled]="generateLoading">
+            {{ generateLoading ? 'Generating...' : '+ Generate Spec' }}
+          </button>
+        </div>
+
+      </form>
+      <div *ngIf="selectedVersion" class="spec-output">
+
+        <h2 class="spec-output-title">
+          AI Generated Specification: {{ selectedFeature?.title }} (v{{ selectedVersion.versionNumber }})
+        </h2>
+
+        <div class="spec-content" id="spec-print-area">
+          <ng-container *ngIf="selectedVersion; else noVersion">
+
+            <div class="spec-section" *ngFor="let item of formatContent(selectedVersion.content)">
+
+              <p class="spec-heading">{{ item.heading }}</p>
+              <p class="spec-body" *ngIf="item.body.length === 1">
+                {{ item.body[0] }}
+              </p>
+              <ul class="spec-list" *ngIf="item.body.length > 1">
+                <li *ngFor="let line of item.body">{{ line }}</li>
+              </ul>
+
+            </div>
+          </ng-container>
+          <ng-template #noVersion>
+            <p class="muted">No spec yet.</p>
+          </ng-template>
+        </div>
+        <div class="refine-section">
+          <label class="refine-label">Refine this</label>
+          <div class="refine-row">
+            <input type="text" class="refine-input" [(ngModel)]="refinementInstruction"
+              placeholder="Ask AI to modify stories, add acceptance criteria..." />
+            <button class="btn btn-secondary" (click)="onRefine()" [disabled]="refineLoading">
+              {{ refineLoading ? 'Refining...' : 'Refine' }}
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <div *ngIf="!showForm && !selectedFeature" class="empty-main">
+      <p>Select a feature or add a new one.</p>
+    </div>
+
+  </main>
+  <ng-container *ngIf="selectedFeature as sf">
+    <aside class="version-panel card" *ngIf="sf.versions && sf.versions.length > 0">
+
+      <h3 class="version-panel-title">Version History</h3>
+
+      <div class="version-list">
+        <div *ngFor="let version of sf.versions.slice().reverse(); let i = index" class="version-item"
+          [class.active]="selectedVersion?.id === version.id" (click)="selectVersion(version)">
+          <div class="version-top">
+            <div class="version-left">
+              <span class="version-tag">v{{ version.versionNumber }}</span>
+              <span *ngIf="i === 0" class="version-latest-badge">Latest</span>
+            </div>
+            <button class="download-btn" (click)="selectAndPrint(version,$event)"
+              title="Download as PDF">&#8595;</button>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+  </ng-container>
+
+</div>
